@@ -1,0 +1,24 @@
+services:
+  app:
+    build: .
+    platform: linux/amd64
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    volumes:
+      - ./chroma_db:/app/chroma_db
+
+  redis:
+    image: redis:7
+    platform: linux/amd64
+    ports:
+      - "6379:6379"
+    restart: always
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
